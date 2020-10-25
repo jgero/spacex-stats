@@ -1,6 +1,4 @@
 <script>
-  import { barOptions } from "./_options";
-  import Chart from "chart.js";
   import { onMount } from "svelte";
 
   let hasLoaded = false;
@@ -16,32 +14,79 @@
         const cores = responseJSON.sort(
           (a, b) => new Date(a.original_launch) > new Date(b.original_launch)
         );
+        // calculate average
+        const average =
+          cores.map((core) => core.reuse_count + 1).reduce((a, b) => a + b) /
+          cores.length;
+
         // data is now completely loaded
         hasLoaded = true;
         // create the chart
-        new Chart(document.getElementById("coreChart"), {
-          type: "bar",
-          data: {
-            labels: cores.map((core) => core.core_serial),
-            datasets: [
+        var options = {
+          chart: {
+            type: "bar",
+            foreColor: "#FFFFFF",
+          },
+          series: [
+            {
+              name: "flights",
+              data: cores.map((core) => core.reuse_count + 1),
+            },
+          ],
+          xaxis: {
+            categories: cores.map((core) => core.core_serial),
+            title: {
+              text: "booster id",
+              style: {
+                color: "#FFFFFF",
+              },
+            },
+          },
+          yaxis: {
+            title: {
+              text: "flights",
+              style: {
+                color: "#FFFFFF",
+              },
+            },
+          },
+          stroke: {
+            curve: "smooth",
+          },
+          dataLabels: {
+            style: {
+              colors: ["#FFFFFF"],
+            },
+          },
+          fill: {
+            colors: ["#f1c46d"],
+          },
+          annotations: {
+            yaxis: [
               {
-                label: "# of flights",
-                data: cores.map((core) => core.reuse_count + 1),
-                backgroundColor: cores.map((core) => {
-                  if (core.status === "lost" || core.status === "expended") {
-                    return "rgba(221, 97, 90, 0.5)";
-                  } else if (core.status === "active") {
-                    return "rgba(98, 173, 110, 0.5)";
-                  } else {
-                    return "rgba(155, 155, 155, 0.5)";
-                  }
-                }),
-                borderWidth: 1,
+                y: average,
+                borderColor: "#FFFFFF",
+                label: {
+                  borderColor: "#FFFFFF",
+                  style: {
+                    color: "#000000",
+                    background: "#FFFFFF",
+                  },
+                  text: `boosters average ${
+                    Math.round(average * 100) / 100
+                  } flights`,
+                },
               },
             ],
           },
-          options: barOptions,
-        });
+        };
+
+        var chart = new ApexCharts(
+          document.querySelector("#coreChart"),
+          options
+        );
+
+        chart.render();
       });
   });
 </script>
@@ -69,8 +114,11 @@
     font-weight: 300;
     color: #f1c46d;
   }
-  canvas {
+  #coreChart {
     max-width: 40vw;
+  }
+  :global(.apexcharts-tooltip) {
+    color: black;
   }
 </style>
 
@@ -78,12 +126,12 @@
   {#if !hasLoaded}
     <p>loading...</p>
   {/if}
-  <canvas id="coreChart" class={hasLoaded ? 'active' : 'hidden'} />
+  <div id="coreChart" />
   <figcaption>
-    <h3>booster fleet</h3>
+    <h3>booster flights</h3>
     <p>
-      The status of boosters with grey bars is unknown, red bar means expended
-      or lost, green means operational
+      The diagram shows the amount of flights of the boosters that have flown
+      since 2014 sorted by date of the first flight
     </p>
   </figcaption>
 </figure>

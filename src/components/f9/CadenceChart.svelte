@@ -11,7 +11,7 @@
 </script>
 
 <script>
-  import Chart from "chart.js";
+  //   import Chart from "chart.js";
   import { lineOptions } from "./_options";
   import { onMount } from "svelte";
 

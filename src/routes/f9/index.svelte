@@ -77,5 +77,5 @@
   </div>
   <CoreChart />
   <div class="spacer" />
-  <CadenceChart />
+  <!-- <CadenceChart /> -->
 </div>

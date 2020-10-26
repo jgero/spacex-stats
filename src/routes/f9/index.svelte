@@ -3,6 +3,7 @@
   import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
   import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
 
+  // move the image on scroll
   function onScroll(ev) {
     const maxScrollX = 300;
     const maxScrollY = 150;

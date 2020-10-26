@@ -30,12 +30,25 @@
           );
         });
         // build an array from the map
-        const launchesPerMonth = Array.from(launchesPerMonthMap.keys()).map(
+        let launchesPerMonth = Array.from(launchesPerMonthMap.keys()).map(
           (key) => ({
             month: key,
             launches: launchesPerMonthMap.get(key),
           })
         );
+        // add average to current launch
+        launchesPerMonth = launchesPerMonth.map((el, index) => {
+          const arrayUntilNow = launchesPerMonth.slice(0, index + 1);
+          return {
+            ...el,
+            average:
+              Math.round(
+                (arrayUntilNow.map((i) => i.launches).reduce((a, b) => a + b) /
+                  (index + 1)) *
+                  100
+              ) / 100,
+          };
+        });
         // calculate average
         const average =
           launchesPerMonth
@@ -53,7 +66,12 @@
               name: "launches",
               data: launchesPerMonth.map((month) => month.launches),
             },
+            {
+              name: "average",
+              data: launchesPerMonth.map((month) => month.average),
+            },
           ],
+          colors: ["#f1c46d", "#FFFFFF"],
           xaxis: {
             categories: launchesPerMonth.map((month) => month.month),
             title: {
@@ -72,37 +90,12 @@
             },
           },
           stroke: {
-            curve: "straight",
+            curve: ["straight", "smooth"],
           },
           dataLabels: {
             style: {
               colors: ["#FFFFFF"],
             },
-          },
-          markers: {
-            size: 4,
-            colors: ["#f1c46d"],
-          },
-          fill: {
-            colors: ["#f1c46d"],
-          },
-          annotations: {
-            yaxis: [
-              {
-                y: average,
-                borderColor: "#FFFFFF",
-                label: {
-                  borderColor: "#FFFFFF",
-                  style: {
-                    color: "#000000",
-                    background: "#FFFFFF",
-                  },
-                  text: `${
-                    Math.round(average * 100) / 100
-                  } launches per month on average`,
-                },
-              },
-            ],
           },
         };
 
@@ -146,8 +139,10 @@
 
 <figure>
   <figcaption>
-    <h3>launch cadence</h3>
-    <p>The steadily increasing launch cadence of Falcon 9 since january 2014</p>
+    <h3>launches per month</h3>
+    <p>
+      The steadily increasing launches per month of Falcon 9 since january 2014
+    </p>
   </figcaption>
   {#if !hasLoaded}
     <p>loading...</p>

@@ -1,7 +1,7 @@
 <script>
   import falcon from "images/f9.jpg";
-  import CoreChart from "../../components/f9/CoreChart.svelte";
-  import CadenceChart from "../../components/f9/CadenceChart.svelte";
+  import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
+  import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
 
   function onScroll(ev) {
     const maxScrollX = 300;
@@ -79,8 +79,8 @@
         <h2>First orbital class rocket capable of reflight</h2>
       </header>
     </div>
-    <CoreChart />
+    <BoosterFlightsBarChart />
     <div class="spacer" />
-    <!-- <CadenceChart /> -->
+    <LaunchesPerMonthChart />
   </div>
 </main>

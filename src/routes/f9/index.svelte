@@ -1,31 +1,29 @@
 <script>
   import falcon from "images/f9.jpg";
+  import { onMount } from "svelte";
   import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
   import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
 
-  // move the image on scroll
-  function onScroll(ev) {
-    const maxScrollX = 300;
-    const maxScrollY = 150;
+  onMount(() => {
+    // move the image on scroll
+    document.querySelector("body").addEventListener("scroll", (ev) => {
+      const maxScrollX = 300;
+      const maxScrollY = 150;
 
-    const scrollPercent =
-      ev.target.scrollTop / (ev.target.scrollHeight - window.innerHeight);
-    document.getElementById("f9background").style.right =
-      maxScrollX * scrollPercent + 32 + "px";
-    document.getElementById("f9background").style.top =
-      maxScrollY - maxScrollY * scrollPercent + 50 + "px";
-  }
+      const scrollPercent =
+        ev.target.scrollTop / (ev.target.scrollHeight - window.innerHeight);
+      document.getElementById("f9background").style.right =
+        maxScrollX * scrollPercent + 32 + "px";
+      document.getElementById("f9background").style.top =
+        maxScrollY - maxScrollY * scrollPercent + 50 + "px";
+    });
+  });
 </script>
 
 <style>
-  main {
-    width: 100%;
-    height: 100vh;
-    overflow: auto;
-  }
   div.page-wrapper {
     width: 100%;
-    background-color: #00335c;
+    background-color: #02305d;
   }
 
   div.screen-one {
@@ -71,17 +69,15 @@
   <title>SpaceX Stats - Falcon 9</title>
 </svelte:head>
 
-<main on:scroll={onScroll}>
-  <div class="page-wrapper" id="page-wrapper" on:scroll={onScroll}>
-    <div class="screen-one">
-      <img class="background" alt="Falcon 9" src={falcon} id="f9background" />
-      <header>
-        <h1>Falcon 9</h1>
-        <h2>First orbital class rocket capable of reflight</h2>
-      </header>
-    </div>
-    <BoosterFlightsBarChart />
-    <div class="spacer" />
-    <LaunchesPerMonthChart />
+<div class="page-wrapper" id="page-wrapper">
+  <div class="screen-one">
+    <img class="background" alt="Falcon 9" src={falcon} id="f9background" />
+    <header>
+      <h1>Falcon 9</h1>
+      <h2>First orbital class rocket capable of reflight</h2>
+    </header>
   </div>
-</main>
+  <BoosterFlightsBarChart />
+  <div class="spacer" />
+  <LaunchesPerMonthChart />
+</div>

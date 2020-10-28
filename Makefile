@@ -8,7 +8,7 @@ build_dev:
 	podman build -t spacex-stats:dev -f ./container/dev.Dockerfile .
 
 run_dev:
-	podman run --tty --name=spacex-stats-devcontainer -v ./src/:/app/src/ -v ./static/:/app/static/ -v ./rollup.config.js:/app/rollup.config.js -p 3000:3000 spacex-stats:dev
+	podman run --tty --name=spacex-stats-devcontainer -v ./src/:/app/src/ -v ./static/:/app/static/ -v ./rollup.config.js:/app/rollup.config.js -p 3000:3000 -p 10000:10000 spacex-stats:dev
 
 clean_dev:
 	podman rm --ignore spacex-stats-devcontainer

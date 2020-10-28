@@ -115,7 +115,7 @@
     color: #f1c46d;
   }
   #coreChart {
-    max-width: 40vw;
+    width: 40vw;
   }
   :global(.apexcharts-tooltip) {
     color: black;

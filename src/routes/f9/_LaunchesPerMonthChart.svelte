@@ -133,7 +133,7 @@
     color: #f1c46d;
   }
   #cadenceChart {
-    max-width: 40vw;
+    width: 40vw;
   }
 </style>
 

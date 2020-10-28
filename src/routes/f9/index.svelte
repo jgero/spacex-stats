@@ -1,27 +1,28 @@
-<script context="module">
-  //   export async function preload(page, session) {
-  //     // get all cores from the api
-  //     const res = await this.fetch("https://api.spacexdata.com/v3/cores?block=5");
-  //     let cores = await res.json();
-  //     // sort them by first launch date
-  //     cores = cores.sort(
-  //       (a, b) => new Date(a.original_launch) > new Date(b.original_launch)
-  //     );
-
-  //     const launchesPerMonthReq = await this.fetch("f9/launchesPerMonth.json");
-  //     const launchesPerMonth = await launchesPerMonthReq.json();
-  //     return { cores, launchesPerMonth };
-  //   }
-</script>
-
 <script>
   import falcon from "images/f9.jpg";
-  //   import { onMount } from "svelte";
-  import CoreChart from "../../components/f9/CoreChart.svelte";
-  import CadenceChart from "../../components/f9/CadenceChart.svelte";
+  import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
+  import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
+
+  // move the image on scroll
+  function onScroll(ev) {
+    const maxScrollX = 300;
+    const maxScrollY = 150;
+
+    const scrollPercent =
+      ev.target.scrollTop / (ev.target.scrollHeight - window.innerHeight);
+    document.getElementById("f9background").style.right =
+      maxScrollX * scrollPercent + 32 + "px";
+    document.getElementById("f9background").style.top =
+      maxScrollY - maxScrollY * scrollPercent + 50 + "px";
+  }
 </script>
 
 <style>
+  main {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+  }
   div.page-wrapper {
     width: 100%;
     background-color: #00335c;
@@ -37,8 +38,11 @@
   }
 
   img.background {
-    grid-area: f9;
-    width: 100%;
+    width: 50%;
+    position: fixed;
+    right: 32px;
+    top: 200px;
+    pointer-events: none;
   }
 
   header {
@@ -67,15 +71,17 @@
   <title>SpaceX Stats - Falcon 9</title>
 </svelte:head>
 
-<div class="page-wrapper">
-  <div class="screen-one">
-    <img class="background" alt="Falcon 9" src={falcon} />
-    <header>
-      <h1>Falcon 9</h1>
-      <h2>First orbital class rocket capable of reflight</h2>
-    </header>
+<main on:scroll={onScroll}>
+  <div class="page-wrapper" id="page-wrapper" on:scroll={onScroll}>
+    <div class="screen-one">
+      <img class="background" alt="Falcon 9" src={falcon} id="f9background" />
+      <header>
+        <h1>Falcon 9</h1>
+        <h2>First orbital class rocket capable of reflight</h2>
+      </header>
+    </div>
+    <BoosterFlightsBarChart />
+    <div class="spacer" />
+    <LaunchesPerMonthChart />
   </div>
-  <CoreChart />
-  <div class="spacer" />
-  <CadenceChart />
-</div>
+</main>

@@ -1,5 +1,5 @@
 <script>
-	import moon from 'images/moon.jpg';
+	import moon from "images/moon.jpg";
 </script>
 
 <style>
@@ -41,13 +41,13 @@
 	<title>SpaceX Stats</title>
 </svelte:head>
 
-
 <div class="startpage-wrapper">
-	<img class="background" alt="moon" src="{moon}">
+	<img class="background" alt="moon" src={moon} />
 	<section>
 		<h1>SpaceX Stats</h1>
-		<h2>Not an official site, just a fan visualizing the data of the SpaceX API</h2>
+		<h2>
+			Not an official site, just a fan visualizing the data of
+			the SpaceX API
+		</h2>
 	</section>
 </div>
-
-

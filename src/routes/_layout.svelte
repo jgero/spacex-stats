@@ -5,8 +5,13 @@
 </script>
 
 <style>
-  /* div {
-  } */
+  header {
+    width: 100%;
+    height: 0px;
+    top: 0;
+    position: sticky;
+    z-index: 20;
+  }
 </style>
 
 <header>

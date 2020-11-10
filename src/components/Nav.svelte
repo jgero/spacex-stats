@@ -20,16 +20,12 @@
 
 <style>
   nav {
-    position: fixed;
     box-sizing: border-box;
-    top: 0;
-    left: 0;
-    width: 100vw;
+    width: 100%;
     padding: 0 40% 0 20%;
     transition: transform 0.2s ease-out;
     transition: transform 0.2s ease-out;
     background-color: rgba(90, 90, 90, 0.6);
-    z-index: 20;
   }
 
   nav.hidden {

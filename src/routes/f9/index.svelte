@@ -1,23 +1,25 @@
 <script>
-  import falcon from "images/f9.jpg";
+  import falcon from "images/f9.png";
   import { onMount } from "svelte";
   import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
   import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
 
   onMount(() => {
     // move the image on scroll
-    document.querySelector("body").addEventListener("scroll", (ev) => {
-      const maxScrollX = 300;
-      const maxScrollY = 150;
-
-      const scrollPercent =
-        ev.target.scrollTop / (ev.target.scrollHeight - window.innerHeight);
-      document.getElementById("f9background").style.right =
-        maxScrollX * scrollPercent + 32 + "px";
-      document.getElementById("f9background").style.top =
-        maxScrollY - maxScrollY * scrollPercent + 50 + "px";
-    });
+    document.querySelector("body").addEventListener("scroll", calculateScroll);
   });
+
+  function calculateScroll(ev) {
+    const maxScrollX = 300;
+    const maxScrollY = 150;
+
+    const scrollPercent =
+      ev.target.scrollTop / (ev.target.scrollHeight - window.innerHeight);
+    document.getElementById("f9background").style.right =
+      maxScrollX * scrollPercent + 32 + "px";
+    document.getElementById("f9background").style.top =
+      maxScrollY - maxScrollY * scrollPercent + 50 + "px";
+  }
 </script>
 
 <style>

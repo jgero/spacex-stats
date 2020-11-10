@@ -57,6 +57,5 @@
 </div>
 
 <div class="second-page">
-  <h3>launch cadence</h3>
   <CadenceChart />
 </div>

@@ -42,7 +42,7 @@
           },
           series: [
             {
-              name: "interval",
+              name: "time between launches",
               data: intervals.map((interval) => interval.value),
             },
             {
@@ -51,15 +51,6 @@
             },
           ],
           colors: ["#f1c46d", "#FFFFFF"],
-          /* xaxis: { */
-          /*   categories: launchesPerMonth.map((month) => month.month), */
-          /*   title: { */
-          /*     text: "month", */
-          /*     style: { */
-          /*       color: "#FFFFFF", */
-          /*     }, */
-          /*   }, */
-          /* }, */
           yaxis: {
             title: {
               text: "days",
@@ -94,14 +85,46 @@
 </script>
 
 <style>
+  figure {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 32px;
+    box-sizing: border-box;
+  }
+
+  figcaption {
+    width: 400px;
+  }
+
+  figcaption > h3 {
+    font-size: 24px;
+    color: #e6e6e6;
+  }
+  figcaption > p {
+    font-size: 18px;
+    font-weight: 300;
+    color: #f1c46d;
+  }
   #cadenceChart {
     width: 40vw;
+  }
+  :global(.apexcharts-tooltip) {
     color: black;
   }
 </style>
 
-{#if !hasLoaded}
-  <p>loading...</p>
-{/if}
-
-<div id="cadenceChart" />
+<figure>
+  {#if !hasLoaded}
+    <p>loading...</p>
+  {/if}
+  <div id="cadenceChart" />
+  <figcaption>
+    <h3>launch cadence</h3>
+    <p>
+      The diagram shows the amount of time that passed between launches. This
+      includes every vehicle and every flight since the first one.
+    </p>
+  </figcaption>
+</figure>

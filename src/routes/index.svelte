@@ -1,6 +1,18 @@
 <script>
+  import { onMount } from "svelte";
   import moon from "images/moon.jpg";
   import CadenceChart from "./_cadenceChart.svelte";
+  import VehicleChart from "./_vehicleChart.svelte";
+
+  let launches;
+
+  onMount(async () => {
+    const apiResponse = await fetch(
+      "https://api.spacexdata.com/v3/launches/past?order=asc"
+    );
+    // only keep the JSON part
+    launches = await apiResponse.json();
+  });
 </script>
 
 <style>
@@ -56,6 +68,9 @@
   </section>
 </div>
 
-<div class="second-page">
-  <CadenceChart />
-</div>
+{#if launches}
+  <div class="second-page">
+    <CadenceChart {launches} />
+    <VehicleChart {launches} />
+  </div>
+{/if}
